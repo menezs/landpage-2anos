@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, Camera, Sparkles, MapPin, X, Play, Pause } from 'lucide-react';
+import { Heart, Calendar, Camera, Sparkles, MapPin, X, Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
