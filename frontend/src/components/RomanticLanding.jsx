@@ -104,6 +104,28 @@ const RomanticLanding = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showImageViewer]);
 
+  // Live timer effect - calculating time since 14-10-2023
+  useEffect(() => {
+    const startDate = new Date('2023-10-14T00:00:00');
+    
+    const updateTimer = () => {
+      const now = new Date();
+      const diff = now - startDate;
+      
+      const totalSeconds = Math.floor(diff / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      
+      setLiveTimer({ hours, minutes, seconds });
+    };
+
+    updateTimer(); // Initial call
+    const interval = setInterval(updateTimer, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 overflow-hidden relative">
       {/* Falling Hearts */}
