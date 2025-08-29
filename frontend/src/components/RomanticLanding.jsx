@@ -353,20 +353,104 @@ const RomanticLanding = () => {
             </DialogTitle>
           </DialogHeader>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+            {galleryImages.map((image, index) => (
               <div
-                key={item}
-                className="aspect-square bg-gradient-to-br from-red-100 to-red-200 rounded-xl flex items-center justify-center border-2 border-red-300 hover:scale-105 transition-all duration-300"
+                key={image.id}
+                className="aspect-square bg-gradient-to-br from-red-100 to-red-200 rounded-xl flex items-center justify-center border-2 border-red-300 hover:scale-105 transition-all duration-300 cursor-pointer group"
+                onClick={() => openImageViewer(index)}
               >
                 <div className="text-center">
                   <Camera className="text-red-600 mx-auto mb-1" size={20} />
-                  <p className="text-red-700 text-xs font-semibold">Foto {item}</p>
+                  <p className="text-red-700 text-xs font-semibold">Foto {image.id}</p>
+                  <p className="text-red-600 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Expandir</p>
                 </div>
               </div>
             ))}
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Full Screen Image Viewer */}
+      {showImageViewer && (
+        <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center">
+          {/* Close button */}
+          <Button
+            onClick={closeImageViewer}
+            variant="outline"
+            size="icon"
+            className="absolute top-6 right-6 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-12 h-12"
+          >
+            <X size={24} />
+          </Button>
+
+          {/* Previous button */}
+          <Button
+            onClick={prevImage}
+            variant="outline"
+            size="icon"
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300"
+          >
+            <ChevronLeft size={32} />
+          </Button>
+
+          {/* Next button */}
+          <Button
+            onClick={nextImage}
+            variant="outline"
+            size="icon"
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300"
+          >
+            <ChevronRight size={32} />
+          </Button>
+
+          {/* Main image container */}
+          <div className="relative w-full h-full flex items-center justify-center p-20">
+            <div className="relative max-w-4xl max-h-full bg-gradient-to-br from-red-100 to-red-200 rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
+              {/* Placeholder image content */}
+              <div className="aspect-[4/3] w-full min-h-[400px] flex items-center justify-center">
+                <div className="text-center">
+                  <Camera className="text-red-600 mx-auto mb-4 animate-pulse" size={80} />
+                  <h3 className="text-2xl font-bold text-red-700 mb-2">{galleryImages[currentImageIndex].title}</h3>
+                  <p className="text-red-600 text-lg">{galleryImages[currentImageIndex].description}</p>
+                  <div className="mt-4 bg-red-50 rounded-lg p-4 border border-red-200">
+                    <p className="text-red-700 text-sm">📸 Adicione sua própria imagem aqui</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Image counter and navigation dots */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4">
+            {/* Counter */}
+            <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+              {currentImageIndex + 1} de {galleryImages.length}
+            </div>
+            
+            {/* Navigation dots */}
+            <div className="flex gap-2">
+              {galleryImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex
+                      ? 'bg-red-500 scale-125'
+                      : 'bg-white/50 hover:bg-white/80'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Keyboard shortcuts hint */}
+          <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
+            <p className="mb-1">⌨️ Atalhos:</p>
+            <p>← → para navegar</p>
+            <p>ESC para fechar</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
