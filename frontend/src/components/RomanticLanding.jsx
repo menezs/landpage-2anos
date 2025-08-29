@@ -8,7 +8,17 @@ const RomanticLanding = () => {
   const [hearts, setHearts] = useState([]);
   const [fireworks, setFireworks] = useState([]);
   const [showGalleryModal, setShowGalleryModal] = useState(false);
+  const [showImageViewer, setShowImageViewer] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // Mock gallery images (placeholders for now)
+  const galleryImages = Array.from({ length: 12 }, (_, i) => ({
+    id: i + 1,
+    title: `Momento Especial ${i + 1}`,
+    description: `Uma memória inesquecível do nosso amor - Foto ${i + 1}`,
+    placeholder: true
+  }));
 
   // Generate falling hearts effect
   useEffect(() => {
