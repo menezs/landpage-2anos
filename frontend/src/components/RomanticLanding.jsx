@@ -72,6 +72,37 @@ const RomanticLanding = () => {
     setIsPlaying(!isPlaying);
   };
 
+  const openImageViewer = (index) => {
+    setCurrentImageIndex(index);
+    setShowImageViewer(true);
+    setShowGalleryModal(false);
+  };
+
+  const closeImageViewer = () => {
+    setShowImageViewer(false);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+  };
+
+  const handleKeyDown = (e) => {
+    if (showImageViewer) {
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'Escape') closeImageViewer();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showImageViewer]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-orange-50 overflow-hidden relative">
       {/* Falling Hearts */}
