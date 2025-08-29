@@ -309,21 +309,26 @@ const RomanticLanding = () => {
           </h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+            {galleryImages.slice(0, 8).map((image, index) => (
               <div
-                key={item}
+                key={image.id}
                 className="relative aspect-square bg-gradient-to-br from-red-100 to-red-200 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-3 group border-3 border-red-300 cursor-pointer"
-                onClick={() => setShowGalleryModal(true)}
+                onClick={() => openImageViewer(index)}
               >
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <Camera className="text-red-600 mx-auto mb-2 animate-pulse" size={28} />
-                    <p className="text-red-700 text-sm font-bold">Foto {item}</p>
-                    <p className="text-red-600 text-xs">Adicionar Imagem</p>
+                    <p className="text-red-700 text-sm font-bold">Foto {image.id}</p>
+                    <p className="text-red-600 text-xs">Clique para Expandir</p>
                   </div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-red-300/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                 <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                
+                {/* Image expansion hint */}
+                <div className="absolute bottom-2 left-2 right-2 bg-black/20 backdrop-blur-sm rounded-lg p-1 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <p className="text-white text-xs text-center font-semibold">Clique para ver em tela cheia</p>
+                </div>
               </div>
             ))}
           </div>
