@@ -11,6 +11,7 @@ const RomanticLanding = () => {
   const [showImageViewer, setShowImageViewer] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [liveTimer, setLiveTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
   // Mock gallery images (placeholders for now)
   const galleryImages = Array.from({ length: 12 }, (_, i) => ({
