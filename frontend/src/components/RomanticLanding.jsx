@@ -427,24 +427,28 @@ const RomanticLanding = () => {
           </Button>
 
           {/* Previous button */}
-          <Button
-            onClick={prevImage}
-            variant="outline"
-            size="icon"
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              prevImage();
+            }}
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 flex items-center justify-center"
           >
             <ChevronLeft size={32} />
-          </Button>
+          </button>
 
           {/* Next button */}
-          <Button
-            onClick={nextImage}
-            variant="outline"
-            size="icon"
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              nextImage();
+            }}
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 flex items-center justify-center"
           >
             <ChevronRight size={32} />
-          </Button>
+          </button>
 
           {/* Main image container */}
           <div className="relative w-full h-full flex items-center justify-center p-20">
