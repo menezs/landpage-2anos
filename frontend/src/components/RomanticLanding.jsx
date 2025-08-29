@@ -252,7 +252,7 @@ const RomanticLanding = () => {
             </div>
 
             {/* Anniversary Counter */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 max-w-md mx-auto shadow-2xl border-2 border-red-200 transform hover:scale-105 transition-all duration-300">
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 max-w-md mx-auto shadow-2xl border-2 border-red-200 transform hover:scale-105 transition-all duration-300 mb-8">
               <h3 className="text-2xl font-bold text-gray-800 mb-6">Nossos 2 Anos Juntos</h3>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div className="bg-gradient-to-br from-red-100 to-red-200 rounded-2xl p-6 transform hover:scale-110 transition-all duration-300">
@@ -266,6 +266,26 @@ const RomanticLanding = () => {
                 <div className="bg-gradient-to-br from-red-300 to-red-400 rounded-2xl p-6 transform hover:scale-110 transition-all duration-300">
                   <div className="text-3xl font-bold text-red-900 animate-pulse">∞</div>
                   <div className="text-sm text-red-800 font-semibold">Sorrisos</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Timer */}
+            <div className="bg-gradient-to-r from-red-500 to-red-700 rounded-3xl p-6 max-w-lg mx-auto shadow-2xl border-2 border-red-300 transform hover:scale-105 transition-all duration-300">
+              <h4 className="text-xl font-bold text-white mb-4 text-center">⏱️ Cronômetro do Nosso Amor</h4>
+              <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-4">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-mono font-bold text-white mb-2 animate-pulse">
+                    {String(liveTimer.hours).padStart(2, '0')}:
+                    {String(liveTimer.minutes).padStart(2, '0')}:
+                    {String(liveTimer.seconds).padStart(2, '0')}
+                  </div>
+                  <p className="text-red-100 text-sm font-semibold">
+                    Desde 14 de Outubro de 2023
+                  </p>
+                  <p className="text-red-50 text-xs mt-1">
+                    Cada segundo ao seu lado é especial ❤️
+                  </p>
                 </div>
               </div>
             </div>
