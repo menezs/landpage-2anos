@@ -535,16 +535,20 @@ const RomanticLanding = () => {
           ></div>
 
           {/* Main image container */}
-          <div className="relative w-full h-full flex items-center justify-center p-20">
+          <div className="relative w-full h-full flex items-center justify-center p-20 z-60">
             <div className="relative max-w-4xl max-h-full rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
               <img 
                 src={galleryImages[currentImageIndex].src} 
                 alt={galleryImages[currentImageIndex].title}
                 className="w-full h-full object-contain"
+                onClick={(e) => e.stopPropagation()}
               />
               
               {/* Image info overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+              <div 
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <h3 className="text-2xl font-bold mb-2">{galleryImages[currentImageIndex].title}</h3>
                 <p className="text-lg opacity-90">{galleryImages[currentImageIndex].description}</p>
               </div>
