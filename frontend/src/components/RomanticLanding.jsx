@@ -524,6 +524,16 @@ const RomanticLanding = () => {
             }}
           ></div>
 
+          {/* Click outside to close */}
+          <div 
+            className="absolute inset-0 z-40 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              closeImageViewer();
+            }}
+          ></div>
+
           {/* Main image container */}
           <div className="relative w-full h-full flex items-center justify-center p-20">
             <div className="relative max-w-4xl max-h-full rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
