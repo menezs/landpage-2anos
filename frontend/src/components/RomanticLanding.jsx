@@ -13,13 +13,65 @@ const RomanticLanding = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [liveTimer, setLiveTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
 
-  // Mock gallery images (placeholders for now)
-  const galleryImages = Array.from({ length: 12 }, (_, i) => ({
-    id: i + 1,
-    title: `Momento Especial ${i + 1}`,
-    description: `Uma memória inesquecível do nosso amor - Foto ${i + 1}`,
-    placeholder: true
-  }));
+  // Real gallery images from project directory
+  const galleryImages = [
+    {
+      id: 1,
+      title: "Momento Íntimo",
+      description: "Um momento especial de carinho e cumplicidade",
+      src: "/images/gallery/couple1.jpg",
+      placeholder: false
+    },
+    {
+      id: 2,
+      title: "Pôr do Sol Romântico",
+      description: "Silhueta do nosso amor ao entardecer",
+      src: "/images/gallery/couple2.jpg",
+      placeholder: false
+    },
+    {
+      id: 3,
+      title: "Ternura Matinal",
+      description: "Momentos de carinho ao amanhecer",
+      src: "/images/gallery/couple3.jpg",
+      placeholder: false
+    },
+    {
+      id: 4,
+      title: "Vista da Cidade",
+      description: "Juntos contemplando o mundo",
+      src: "/images/gallery/couple4.jpg",
+      placeholder: false
+    },
+    {
+      id: 5,
+      title: "Símbolo do Nosso Amor",
+      description: "Mãos entrelaçadas, corações unidos",
+      src: "/images/gallery/couple5.jpg",
+      placeholder: false
+    },
+    {
+      id: 6,
+      title: "Momentos Felizes",
+      description: "Sorrisos que iluminam nossos dias",
+      src: "/images/gallery/couple6.jpg",
+      placeholder: false
+    },
+    {
+      id: 7,
+      title: "Amor Eterno",
+      description: "Celebrando nossa jornada juntos",
+      src: "/images/gallery/couple7.jpg",
+      placeholder: false
+    },
+    {
+      id: 8,
+      title: "Cumplicidade",
+      description: "Olhares que dizem tudo",
+      src: "/images/gallery/couple8.jpg",
+      placeholder: false
+    }
+  ];
 
   // Generate falling hearts effect
   useEffect(() => {
@@ -355,22 +407,25 @@ const RomanticLanding = () => {
             {galleryImages.slice(0, 8).map((image, index) => (
               <div
                 key={image.id}
-                className="relative aspect-square bg-gradient-to-br from-red-100 to-red-200 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-3 group border-3 border-red-300 cursor-pointer"
+                className="relative aspect-square rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-3 group border-3 border-red-300 cursor-pointer"
                 onClick={() => openImageViewer(index)}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <Camera className="text-red-600 mx-auto mb-2 animate-pulse" size={28} />
-                    <p className="text-red-700 text-sm font-bold">Foto {image.id}</p>
-                    <p className="text-red-600 text-xs">Clique para Expandir</p>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-red-300/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-                <div className="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <img 
+                  src={image.src} 
+                  alt={image.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                 
-                {/* Image expansion hint */}
-                <div className="absolute bottom-2 left-2 right-2 bg-black/20 backdrop-blur-sm rounded-lg p-1 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <p className="text-white text-xs text-center font-semibold">Clique para ver em tela cheia</p>
+                {/* Image info overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
+                  <h3 className="font-bold text-sm">{image.title}</h3>
+                  <p className="text-xs opacity-90">{image.description}</p>
+                </div>
+                
+                {/* Click hint */}
+                <div className="absolute top-2 right-2 bg-black/30 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <Camera className="text-white" size={16} />
                 </div>
               </div>
             ))}
@@ -399,14 +454,14 @@ const RomanticLanding = () => {
             {galleryImages.map((image, index) => (
               <div
                 key={image.id}
-                className="aspect-square bg-gradient-to-br from-red-100 to-red-200 rounded-xl flex items-center justify-center border-2 border-red-300 hover:scale-105 transition-all duration-300 cursor-pointer group"
+                className="aspect-square rounded-xl overflow-hidden border-2 border-red-300 hover:scale-105 transition-all duration-300 cursor-pointer group"
                 onClick={() => openImageViewer(index)}
               >
-                <div className="text-center">
-                  <Camera className="text-red-600 mx-auto mb-1" size={20} />
-                  <p className="text-red-700 text-xs font-semibold">Foto {image.id}</p>
-                  <p className="text-red-600 text-xs opacity-0 group-hover:opacity-100 transition-opacity">Expandir</p>
-                </div>
+                <img 
+                  src={image.src} 
+                  alt={image.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
+                />
               </div>
             ))}
           </div>
@@ -450,19 +505,38 @@ const RomanticLanding = () => {
             <ChevronRight size={32} />
           </button>
 
+          {/* Touch/Click areas for mobile navigation */}
+          <div 
+            className="absolute left-0 top-0 w-1/3 h-full z-50 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              prevImage();
+            }}
+          ></div>
+          
+          <div 
+            className="absolute right-0 top-0 w-1/3 h-full z-50 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              nextImage();
+            }}
+          ></div>
+
           {/* Main image container */}
           <div className="relative w-full h-full flex items-center justify-center p-20">
-            <div className="relative max-w-4xl max-h-full bg-gradient-to-br from-red-100 to-red-200 rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
-              {/* Placeholder image content */}
-              <div className="aspect-[4/3] w-full min-h-[400px] flex items-center justify-center">
-                <div className="text-center">
-                  <Camera className="text-red-600 mx-auto mb-4 animate-pulse" size={80} />
-                  <h3 className="text-2xl font-bold text-red-700 mb-2">{galleryImages[currentImageIndex].title}</h3>
-                  <p className="text-red-600 text-lg">{galleryImages[currentImageIndex].description}</p>
-                  <div className="mt-4 bg-red-50 rounded-lg p-4 border border-red-200">
-                    <p className="text-red-700 text-sm">📸 Adicione sua própria imagem aqui</p>
-                  </div>
-                </div>
+            <div className="relative max-w-4xl max-h-full rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
+              <img 
+                src={galleryImages[currentImageIndex].src} 
+                alt={galleryImages[currentImageIndex].title}
+                className="w-full h-full object-contain"
+              />
+              
+              {/* Image info overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                <h3 className="text-2xl font-bold mb-2">{galleryImages[currentImageIndex].title}</h3>
+                <p className="text-lg opacity-90">{galleryImages[currentImageIndex].description}</p>
               </div>
             </div>
           </div>
@@ -490,10 +564,10 @@ const RomanticLanding = () => {
             </div>
           </div>
 
-          {/* Keyboard shortcuts hint */}
+          {/* Navigation instructions */}
           <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
-            <p className="mb-1">⌨️ Atalhos:</p>
-            <p>← → para navegar</p>
+            <p className="mb-1">📱 Navegação:</p>
+            <p>← → teclas ou clique nas laterais</p>
             <p>ESC para fechar</p>
           </div>
         </div>

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -18,6 +19,131 @@ body {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Love Letter Animations */
+.letter-envelope {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 400px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.envelope-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f8f4f0 0%, #e8ddd4 100%);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  transform-origin: bottom;
+  animation: envelopeFloat 3s ease-in-out infinite;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 300px solid transparent;
+  border-right: 300px solid transparent;
+  border-top: 200px solid #d4af37;
+  border-radius: 15px 15px 0 0;
+  transform-origin: bottom center;
+  transition: transform 2s ease-in-out;
+}
+
+.letter-envelope.opening .envelope-flap {
+  transform: translateX(-50%) rotateX(-180deg);
+}
+
+.letter-paper {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  right: 50px;
+  bottom: 50px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  opacity: 0;
+  transform: translateY(50px) scale(0.8);
+  transition: all 1.5s ease-in-out;
+  overflow-y: auto;
+  font-family: 'Dancing Script', cursive;
+}
+
+.letter-paper.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.letter-header {
+  text-align: center;
+  border-bottom: 2px solid #d4af37;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+}
+
+.letter-content {
+  line-height: 1.8;
+  color: #333;
+  font-size: 16px;
+}
+
+.typed-text {
+  white-space: pre-line;
+  animation: typewriter 4s steps(50) 1s forwards;
+  overflow: hidden;
+  border-right: 2px solid #d4af37;
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+    border-right: transparent;
+  }
+}
+
+@keyframes envelopeFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+.floating-hearts .floating-heart {
+  position: absolute;
+  animation: floatUp 6s ease-in-out infinite;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) rotate(360deg) scale(1.2);
+  }
 }
 
 /* Enhanced animations for falling hearts */
@@ -207,6 +333,15 @@ html {
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  
+  .letter-paper {
+    padding: 20px;
+    font-size: 14px;
+  }
+  
+  .letter-envelope {
+    height: 350px;
   }
 }
 
