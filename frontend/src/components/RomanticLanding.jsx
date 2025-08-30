@@ -556,18 +556,24 @@ const RomanticLanding = () => {
           </div>
 
           {/* Image counter and navigation dots */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 z-60">
             {/* Counter */}
-            <div className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold">
+            <div 
+              className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold"
+              onClick={(e) => e.stopPropagation()}
+            >
               {currentImageIndex + 1} de {galleryImages.length}
             </div>
             
             {/* Navigation dots */}
-            <div className="flex gap-2">
+            <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
               {galleryImages.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentImageIndex(index)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentImageIndex(index);
+                  }}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentImageIndex
                       ? 'bg-red-500 scale-125'
@@ -579,10 +585,13 @@ const RomanticLanding = () => {
           </div>
 
           {/* Navigation instructions */}
-          <div className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm">
+          <div 
+            className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm z-60"
+            onClick={(e) => e.stopPropagation()}
+          >
             <p className="mb-1">📱 Navegação:</p>
             <p>← → teclas ou clique nas laterais</p>
-            <p>ESC para fechar</p>
+            <p>ESC ou clique fora para fechar</p>
           </div>
         </div>
       )}
