@@ -5,6 +5,7 @@ import RomanticLanding from "./components/RomanticLanding";
 import Timeline from "./components/Timeline";
 import Footer from "./components/Footer";
 import LoveLetter from "./components/LoveLetter";
+import LoveLetterSection from "./components/LoveLetterSection";
 
 function App() {
   const [showLetter, setShowLetter] = useState(true);
@@ -25,6 +26,7 @@ function App() {
             <div>
               <RomanticLanding />
               <Timeline />
+              <LoveLetterSection />
               <Footer />
             </div>
           } />
