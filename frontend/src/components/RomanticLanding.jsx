@@ -471,58 +471,39 @@ const RomanticLanding = () => {
       {/* Full Screen Image Viewer */}
       {showImageViewer && (
         <div className="fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center">
-          {/* Close button */}
+          {/* Close button - Hidden on mobile */}
           <Button
             onClick={closeImageViewer}
             variant="outline"
             size="icon"
-            className="absolute top-6 right-6 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-12 h-12"
+            className="absolute top-6 right-6 z-60 bg-white/10 border-white/30 text-white hover:bg-white/20 rounded-full w-12 h-12 hidden md:block"
           >
             <X size={24} />
           </Button>
 
-          {/* Previous button */}
+          {/* Previous button - Hidden on mobile */}
           <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               prevImage();
             }}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 items-center justify-center hidden md:flex"
           >
             <ChevronLeft size={32} />
           </button>
 
-          {/* Next button */}
+          {/* Next button - Hidden on mobile */}
           <button
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               nextImage();
             }}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-white/10 border border-white/30 text-white hover:bg-white/20 rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 items-center justify-center hidden md:flex"
           >
             <ChevronRight size={32} />
           </button>
-
-          {/* Touch/Click areas for mobile navigation */}
-          <div 
-            className="absolute left-0 top-0 w-1/3 h-full z-50 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              prevImage();
-            }}
-          ></div>
-          
-          <div 
-            className="absolute right-0 top-0 w-1/3 h-full z-50 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              nextImage();
-            }}
-          ></div>
 
           {/* Click outside to close */}
           <div 
@@ -534,9 +515,28 @@ const RomanticLanding = () => {
             }}
           ></div>
 
+          {/* Touch/Click areas for navigation - Full height on mobile, 1/3 width on desktop */}
+          <div 
+            className="absolute left-0 top-0 w-1/2 md:w-1/3 h-full z-50 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              prevImage();
+            }}
+          ></div>
+          
+          <div 
+            className="absolute right-0 top-0 w-1/2 md:w-1/3 h-full z-50 cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              nextImage();
+            }}
+          ></div>
+
           {/* Main image container */}
-          <div className="relative w-full h-full flex items-center justify-center p-20 z-60">
-            <div className="relative max-w-4xl max-h-full rounded-2xl shadow-2xl border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
+          <div className="relative w-full h-full flex items-center justify-center p-4 md:p-20 z-60">
+            <div className="relative max-w-full max-h-full md:max-w-4xl rounded-2xl shadow-2xl border-2 md:border-4 border-red-300 overflow-hidden transform hover:scale-105 transition-all duration-500">
               <img 
                 src={galleryImages[currentImageIndex].src} 
                 alt={galleryImages[currentImageIndex].title}
@@ -544,9 +544,9 @@ const RomanticLanding = () => {
                 onClick={(e) => e.stopPropagation()}
               />
               
-              {/* Image info overlay */}
+              {/* Image info overlay - Hidden on mobile */}
               <div 
-                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white"
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white hidden md:block"
                 onClick={(e) => e.stopPropagation()}
               >
                 <h3 className="text-2xl font-bold mb-2">{galleryImages[currentImageIndex].title}</h3>
@@ -555,8 +555,8 @@ const RomanticLanding = () => {
             </div>
           </div>
 
-          {/* Image counter and navigation dots */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-4 z-60">
+          {/* Image counter and navigation dots - Hidden on mobile */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center gap-4 z-60 hidden md:flex">
             {/* Counter */}
             <div 
               className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold"
@@ -584,14 +584,33 @@ const RomanticLanding = () => {
             </div>
           </div>
 
-          {/* Navigation instructions */}
+          {/* Mobile-only counter at top */}
+          <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-60 md:hidden">
+            <div 
+              className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 text-white font-semibold text-sm"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {currentImageIndex + 1} de {galleryImages.length}
+            </div>
+          </div>
+
+          {/* Navigation instructions - Updated for mobile */}
           <div 
-            className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm z-60"
+            className="absolute top-6 left-6 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-sm z-60 hidden md:block"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="mb-1">📱 Navegação:</p>
             <p>← → teclas ou clique nas laterais</p>
             <p>ESC ou clique fora para fechar</p>
+          </div>
+
+          {/* Mobile navigation instructions */}
+          <div 
+            className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-sm rounded-lg p-3 text-white text-xs z-60 md:hidden text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p>Toque nas laterais para navegar</p>
+            <p>Toque no centro para fechar</p>
           </div>
         </div>
       )}
