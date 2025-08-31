@@ -131,18 +131,44 @@ const RomanticLanding = () => {
     setCurrentImageIndex(index);
     setShowImageViewer(true);
     setShowGalleryModal(false);
+    setImageLoading(true);
+    
+    // Simulate image loading
+    setTimeout(() => {
+      setImageLoading(false);
+    }, 300);
   };
 
   const closeImageViewer = () => {
-    setShowImageViewer(false);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setShowImageViewer(false);
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setImageLoading(true);
+    
+    setTimeout(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
+      setIsTransitioning(false);
+      setTimeout(() => setImageLoading(false), 200);
+    }, 150);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setImageLoading(true);
+    
+    setTimeout(() => {
+      setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
+      setIsTransitioning(false);
+      setTimeout(() => setImageLoading(false), 200);
+    }, 150);
   };
 
   const handleKeyDown = (e) => {
