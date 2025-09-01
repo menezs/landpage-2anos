@@ -13,6 +13,9 @@ const RomanticLanding = () => {
   const [isPlaying, setIsPlaying] = useState(true);
   const [liveTimer, setLiveTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [viewerAnimating, setViewerAnimating] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
 
   // Real gallery images from project directory
