@@ -584,7 +584,7 @@ const RomanticLanding = () => {
           <div className="relative w-full h-full flex items-center justify-center p-4 md:p-20 z-60">
             <div className={`relative max-w-full max-h-full md:max-w-5xl rounded-3xl shadow-2xl border-2 md:border-4 border-red-300/50 overflow-hidden transition-all duration-500 ${
               isTransitioning ? 'scale-95 blur-sm opacity-70' : 'scale-100 blur-0 opacity-100'
-            } ${imageLoading ? 'animate-pulse' : ''}`}>
+            } ${!imageLoaded ? 'animate-pulse' : ''}`}>
               
               {/* Loading overlay */}
               {imageLoading && (
