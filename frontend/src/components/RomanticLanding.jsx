@@ -647,11 +647,11 @@ const RomanticLanding = () => {
                     e.stopPropagation();
                     if (index !== currentImageIndex && !isTransitioning) {
                       setIsTransitioning(true);
-                      setImageLoading(true);
+                      setImageLoaded(false);
                       setTimeout(() => {
                         setCurrentImageIndex(index);
                         setIsTransitioning(false);
-                        setTimeout(() => setImageLoading(false), 200);
+                        setTimeout(() => setImageLoaded(true), 200);
                       }, 150);
                     }
                   }}
