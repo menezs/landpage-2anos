@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, Camera, Sparkles, MapPin, X, Play, Pause, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, Calendar, Camera, Sparkles, MapPin, Play, Pause } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import EnhancedImageViewer from './EnhancedImageViewer';
 
 const RomanticLanding = () => {
   const [hearts, setHearts] = useState([]);
@@ -12,65 +13,62 @@ const RomanticLanding = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [liveTimer, setLiveTimer] = useState({ hours: 0, minutes: 0, seconds: 0 });
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [viewerAnimating, setViewerAnimating] = useState(false);
 
   // Real gallery images from project directory
   const galleryImages = [
     {
       id: 1,
       title: "Momento Íntimo",
-      description: "Um momento especial de carinho e cumplicidade",
+      description: "Um momento especial de carinho e cumplicidade que eternizou nosso amor",
       src: "/images/gallery/couple1.jpg",
       placeholder: false
     },
     {
       id: 2,
       title: "Pôr do Sol Romântico",
-      description: "Silhueta do nosso amor ao entardecer",
+      description: "Silhueta do nosso amor ao entardecer, quando o mundo para só para nós dois",
       src: "/images/gallery/couple2.jpg",
       placeholder: false
     },
     {
       id: 3,
       title: "Ternura Matinal",
-      description: "Momentos de carinho ao amanhecer",
+      description: "Momentos de carinho ao amanhecer, quando cada dia começava com seu sorriso",
       src: "/images/gallery/couple3.jpg",
       placeholder: false
     },
     {
       id: 4,
       title: "Vista da Cidade",
-      description: "Juntos contemplando o mundo",
+      description: "Juntos contemplando o mundo, sabendo que temos um no outro tudo que precisamos",
       src: "/images/gallery/couple4.jpg",
       placeholder: false
     },
     {
       id: 5,
       title: "Símbolo do Nosso Amor",
-      description: "Mãos entrelaçadas, corações unidos",
+      description: "Mãos entrelaçadas, corações unidos, promessas de eternidade seladas no amor",
       src: "/images/gallery/couple5.jpg",
       placeholder: false
     },
     {
       id: 6,
       title: "Momentos Felizes",
-      description: "Sorrisos que iluminam nossos dias",
+      description: "Sorrisos que iluminam nossos dias e aquecem nossos corações para sempre",
       src: "/images/gallery/couple6.jpg",
       placeholder: false
     },
     {
       id: 7,
       title: "Amor Eterno",
-      description: "Celebrando nossa jornada juntos",
+      description: "Celebrando nossa jornada juntos e todos os momentos mágicos que vivemos",
       src: "/images/gallery/couple7.jpg",
       placeholder: false
     },
     {
       id: 8,
       title: "Cumplicidade",
-      description: "Olhares que dizem tudo",
+      description: "Olhares que dizem tudo, palavras desnecessárias quando os corações se entendem",
       src: "/images/gallery/couple8.jpg",
       placeholder: false
     }
@@ -132,50 +130,26 @@ const RomanticLanding = () => {
     setCurrentImageIndex(index);
     setShowImageViewer(true);
     setShowGalleryModal(false);
-    setImageLoaded(false);
-    
-    // Simulate image loading
-    setTimeout(() => {
-      setImageLoaded(true);
-    }, 300);
   };
 
   const closeImageViewer = () => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setShowImageViewer(false);
-      setIsTransitioning(false);
-    }, 300);
+    setShowImageViewer(false);
   };
 
-  const nextImage = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setImageLoaded(false);
-    
-    setTimeout(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % galleryImages.length);
-      setIsTransitioning(false);
-      setTimeout(() => setImageLoaded(true), 200);
-    }, 150);
-  };
-
-  const prevImage = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setImageLoaded(false);
-    
-    setTimeout(() => {
-      setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
-      setIsTransitioning(false);
-      setTimeout(() => setImageLoaded(true), 200);
-    }, 150);
+  const handleImageIndexChange = (index) => {
+    setCurrentImageIndex(index);
   };
 
   const handleKeyDown = (e) => {
     if (showImageViewer) {
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
+      if (e.key === 'ArrowRight') {
+        const nextIndex = (currentImageIndex + 1) % galleryImages.length;
+        setCurrentImageIndex(nextIndex);
+      }
+      if (e.key === 'ArrowLeft') {
+        const prevIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        setCurrentImageIndex(prevIndex);
+      }
       if (e.key === 'Escape') closeImageViewer();
     }
   };
@@ -183,7 +157,7 @@ const RomanticLanding = () => {
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [showImageViewer]);
+  }, [showImageViewer, currentImageIndex, galleryImages.length]);
 
   // Live timer effect - calculating time since 14-10-2023
   useEffect(() => {
@@ -423,7 +397,7 @@ const RomanticLanding = () => {
         </div>
       </section>
 
-      {/* Photo Gallery Section */}
+      {/* Enhanced Photo Gallery Section */}
       <section id="galeria" className="py-16">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 animate-fade-in">
@@ -436,36 +410,45 @@ const RomanticLanding = () => {
             {galleryImages.slice(0, 8).map((image, index) => (
               <div
                 key={image.id}
-                className="relative aspect-square rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-3 group border-3 border-red-300 cursor-pointer"
+                className="relative aspect-square rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-110 hover:rotate-3 group border-3 border-red-300 cursor-pointer bg-gradient-to-br from-red-50 to-red-100"
                 onClick={() => openImageViewer(index)}
               >
                 <img 
                   src={image.src} 
                   alt={image.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
                 
-                {/* Image info overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
-                  <h3 className="font-bold text-sm">{image.title}</h3>
-                  <p className="text-xs opacity-90">{image.description}</p>
+                {/* Enhanced overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
+                
+                {/* Enhanced image info overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-all duration-500">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Heart className="text-red-400" size={16} />
+                    <h3 className="font-bold text-lg">{image.title}</h3>
+                  </div>
+                  <p className="text-sm opacity-90 leading-relaxed line-clamp-2">{image.description}</p>
                 </div>
                 
-                {/* Click hint */}
-                <div className="absolute top-2 right-2 bg-black/30 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <Camera className="text-white" size={16} />
+                {/* Click hint with animation */}
+                <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse">
+                  <Camera className="text-white" size={18} />
                 </div>
+
+                {/* Romantic glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-3xl"></div>
               </div>
             ))}
           </div>
           
-          <div className="text-center mt-8">
+          <div className="text-center mt-12">
             <Button 
               onClick={() => setShowGalleryModal(true)}
-              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-8 py-4 rounded-full text-lg shadow-2xl transform hover:scale-110 transition-all duration-500 animate-bounce"
+              className="bg-gradient-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900 text-white px-10 py-4 rounded-full text-lg shadow-2xl transform hover:scale-110 transition-all duration-500 animate-bounce"
             >
-              Ver Mais Fotos
+              <Heart className="mr-2" />
+              Ver Todas as Fotos
             </Button>
           </div>
         </div>
@@ -473,239 +456,46 @@ const RomanticLanding = () => {
 
       {/* Gallery Modal */}
       <Dialog open={showGalleryModal} onOpenChange={setShowGalleryModal}>
-        <DialogContent className="max-w-4xl bg-white/95 backdrop-blur-md border-2 border-red-200">
+        <DialogContent className="max-w-6xl bg-white/95 backdrop-blur-md border-2 border-red-200 rounded-3xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">
+            <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent text-center">
+              <Heart className="inline mr-3" />
               Nossa Galeria de Momentos Especiais
+              <Heart className="inline ml-3" />
             </DialogTitle>
           </DialogHeader>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[70vh] overflow-y-auto p-4">
             {galleryImages.map((image, index) => (
               <div
                 key={image.id}
-                className="aspect-square rounded-xl overflow-hidden border-2 border-red-300 hover:scale-105 transition-all duration-300 cursor-pointer group"
-                onClick={() => openImageViewer(index)}
+                className="aspect-square rounded-2xl overflow-hidden border-2 border-red-300 hover:border-red-500 hover:scale-105 transition-all duration-300 cursor-pointer group bg-gradient-to-br from-red-50 to-red-100"
+                onClick={() => {
+                  setShowGalleryModal(false);
+                  setTimeout(() => openImageViewer(index), 300);
+                }}
               >
                 <img 
                   src={image.src} 
                   alt={image.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
+                  className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                  <p className="text-white text-sm font-semibold p-3">{image.title}</p>
+                </div>
               </div>
             ))}
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Full Screen Image Viewer */}
-      {showImageViewer && (
-        <div className={`fixed inset-0 bg-black/95 backdrop-blur-lg z-50 flex items-center justify-center transition-all duration-500 ${isTransitioning ? 'opacity-50' : 'opacity-100'}`}>
-          
-          {/* Animated background particles */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(12)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-2 h-2 bg-red-400 rounded-full animate-pulse"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${i * 0.5}s`,
-                  animationDuration: `${2 + Math.random()}s`
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Close button - Hidden on mobile */}
-          <button
-            onClick={closeImageViewer}
-            className="absolute top-6 right-6 z-60 bg-white/10 hover:bg-white/20 border border-white/30 text-white rounded-full w-12 h-12 hidden md:flex items-center justify-center transition-all duration-300 hover:scale-110 backdrop-blur-sm"
-          >
-            <X size={24} />
-          </button>
-
-          {/* Previous button - Hidden on mobile */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              prevImage();
-            }}
-            disabled={isTransitioning}
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 z-60 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/40 hover:to-red-600/40 border border-red-300/30 text-white rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 items-center justify-center hidden md:flex backdrop-blur-sm disabled:opacity-50"
-          >
-            <ChevronLeft size={32} />
-          </button>
-
-          {/* Next button - Hidden on mobile */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              nextImage();
-            }}
-            disabled={isTransitioning}
-            className="absolute right-6 top-1/2 transform -translate-y-1/2 z-60 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/40 hover:to-red-600/40 border border-red-300/30 text-white rounded-full w-16 h-16 hover:scale-110 transition-all duration-300 items-center justify-center hidden md:flex backdrop-blur-sm disabled:opacity-50"
-          >
-            <ChevronRight size={32} />
-          </button>
-
-          {/* Click outside to close */}
-          <div 
-            className="absolute inset-0 z-40 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              closeImageViewer();
-            }}
-          ></div>
-
-          {/* Touch/Click areas for navigation - Full height on mobile, 1/3 width on desktop */}
-          <div 
-            className="absolute left-0 top-0 w-1/2 md:w-1/3 h-full z-50 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              prevImage();
-            }}
-          ></div>
-          
-          <div 
-            className="absolute right-0 top-0 w-1/2 md:w-1/3 h-full z-50 cursor-pointer"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              nextImage();
-            }}
-          ></div>
-
-          {/* Main image container with enhanced animations */}
-          <div className="relative w-full h-full flex items-center justify-center p-4 md:p-20 z-60">
-            <div className={`relative max-w-full max-h-full md:max-w-5xl rounded-3xl shadow-2xl border-2 md:border-4 border-red-300/50 overflow-hidden transition-all duration-500 ${
-              isTransitioning ? 'scale-95 blur-sm opacity-70' : 'scale-100 blur-0 opacity-100'
-            } ${!imageLoaded ? 'animate-pulse' : ''}`}>
-              
-              {/* Loading overlay */}
-              {!imageLoaded && (
-                <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-pink-500/20 backdrop-blur-sm flex items-center justify-center z-10">
-                  <div className="flex items-center gap-3 text-white">
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span className="text-lg font-semibold">Carregando...</span>
-                  </div>
-                </div>
-              )}
-              
-              <img 
-                src={galleryImages[currentImageIndex].src} 
-                alt={galleryImages[currentImageIndex].title}
-                className={`w-full h-full object-contain transition-all duration-700 ${
-                  !imageLoaded ? 'scale-110 blur-md opacity-0' : 'scale-100 blur-0 opacity-100'
-                }`}
-                onClick={(e) => e.stopPropagation()}
-                onLoad={() => setImageLoaded(true)}
-              />
-              
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 via-transparent to-pink-500/10 pointer-events-none"></div>
-              
-              {/* Image info overlay - Hidden on mobile */}
-              <div 
-                className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-8 text-white hidden md:block transition-all duration-500 ${
-                  !imageLoaded ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-                }`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <h3 className="text-3xl font-bold mb-3 bg-gradient-to-r from-red-300 to-pink-300 bg-clip-text text-transparent">
-                  {galleryImages[currentImageIndex].title}
-                </h3>
-                <p className="text-xl opacity-90 leading-relaxed">
-                  {galleryImages[currentImageIndex].description}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Enhanced image counter and navigation dots - Hidden on mobile */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex-col items-center gap-6 z-60 hidden md:flex">
-            {/* Counter with romantic design */}
-            <div 
-              className="bg-gradient-to-r from-red-500/30 to-pink-500/30 backdrop-blur-sm rounded-full px-6 py-3 text-white font-bold text-lg border border-red-300/50 shadow-xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Heart className="inline mr-2" size={18} />
-              {currentImageIndex + 1} de {galleryImages.length}
-              <Heart className="inline ml-2" size={18} />
-            </div>
-            
-            {/* Enhanced navigation dots */}
-            <div className="flex gap-3" onClick={(e) => e.stopPropagation()}>
-              {galleryImages.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (index !== currentImageIndex && !isTransitioning) {
-                      setIsTransitioning(true);
-                      setImageLoaded(false);
-                      setTimeout(() => {
-                        setCurrentImageIndex(index);
-                        setIsTransitioning(false);
-                        setTimeout(() => setImageLoaded(true), 200);
-                      }, 150);
-                    }
-                  }}
-                  disabled={isTransitioning}
-                  className={`w-4 h-4 rounded-full transition-all duration-300 border-2 ${
-                    index === currentImageIndex
-                      ? 'bg-red-500 border-red-300 scale-125 shadow-lg'
-                      : 'bg-white/30 border-white/50 hover:bg-white/60 hover:scale-110'
-                  } disabled:opacity-50`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile-only enhanced counter at top */}
-          <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-60 md:hidden">
-            <div 
-              className="bg-gradient-to-r from-red-500/40 to-pink-500/40 backdrop-blur-sm rounded-full px-6 py-2 text-white font-bold text-sm border border-red-300/50 flex items-center gap-2"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Heart size={14} />
-              {currentImageIndex + 1} de {galleryImages.length}
-              <Heart size={14} />
-            </div>
-          </div>
-
-          {/* Enhanced navigation instructions - Updated for mobile */}
-          <div 
-            className="absolute top-8 left-8 bg-gradient-to-r from-black/50 to-black/30 backdrop-blur-sm rounded-xl p-4 text-white text-sm z-60 hidden md:block border border-white/20"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles size={16} className="text-yellow-400" />
-              <span className="font-semibold">Navegação</span>
-            </div>
-            <p className="mb-1">← → teclas ou clique nas laterais</p>
-            <p>ESC ou clique fora para fechar</p>
-          </div>
-
-          {/* Enhanced mobile navigation instructions */}
-          <div 
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-black/60 to-black/40 backdrop-blur-sm rounded-xl p-4 text-white text-xs z-60 md:hidden text-center border border-white/20"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <Sparkles size={12} className="text-yellow-400" />
-              <span className="font-semibold">Navegação</span>
-              <Sparkles size={12} className="text-yellow-400" />
-            </div>
-            <p>Toque nas laterais para navegar</p>
-            <p>Toque no centro para fechar</p>
-          </div>
-        </div>
-      )}
+      {/* Enhanced Image Viewer */}
+      <EnhancedImageViewer
+        isOpen={showImageViewer}
+        onClose={closeImageViewer}
+        images={galleryImages}
+        currentIndex={currentImageIndex}
+        onIndexChange={handleImageIndexChange}
+      />
     </div>
   );
 };
