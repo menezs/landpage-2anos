@@ -612,7 +612,7 @@ const RomanticLanding = () => {
               {/* Image info overlay - Hidden on mobile */}
               <div 
                 className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-8 text-white hidden md:block transition-all duration-500 ${
-                  imageLoading ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+                  !imageLoaded ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
                 }`}
                 onClick={(e) => e.stopPropagation()}
               >
