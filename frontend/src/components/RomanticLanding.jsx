@@ -600,10 +600,10 @@ const RomanticLanding = () => {
                 src={galleryImages[currentImageIndex].src} 
                 alt={galleryImages[currentImageIndex].title}
                 className={`w-full h-full object-contain transition-all duration-700 ${
-                  imageLoading ? 'scale-110 blur-md opacity-0' : 'scale-100 blur-0 opacity-100'
+                  !imageLoaded ? 'scale-110 blur-md opacity-0' : 'scale-100 blur-0 opacity-100'
                 }`}
                 onClick={(e) => e.stopPropagation()}
-                onLoad={() => setImageLoading(false)}
+                onLoad={() => setImageLoaded(true)}
               />
               
               {/* Glow effect */}
