@@ -15,8 +15,6 @@ const RomanticLanding = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [viewerAnimating, setViewerAnimating] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [imageLoading, setImageLoading] = useState(false);
 
   // Real gallery images from project directory
   const galleryImages = [
