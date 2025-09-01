@@ -132,11 +132,11 @@ const RomanticLanding = () => {
     setCurrentImageIndex(index);
     setShowImageViewer(true);
     setShowGalleryModal(false);
-    setImageLoading(true);
+    setImageLoaded(false);
     
     // Simulate image loading
     setTimeout(() => {
-      setImageLoading(false);
+      setImageLoaded(true);
     }, 300);
   };
 
