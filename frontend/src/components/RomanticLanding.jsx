@@ -163,12 +163,12 @@ const RomanticLanding = () => {
   const prevImage = () => {
     if (isTransitioning) return;
     setIsTransitioning(true);
-    setImageLoading(true);
+    setImageLoaded(false);
     
     setTimeout(() => {
       setCurrentImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
       setIsTransitioning(false);
-      setTimeout(() => setImageLoading(false), 200);
+      setTimeout(() => setImageLoaded(true), 200);
     }, 150);
   };
 
