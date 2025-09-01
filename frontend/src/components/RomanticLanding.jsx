@@ -587,7 +587,7 @@ const RomanticLanding = () => {
             } ${!imageLoaded ? 'animate-pulse' : ''}`}>
               
               {/* Loading overlay */}
-              {imageLoading && (
+              {!imageLoaded && (
                 <div className="absolute inset-0 bg-gradient-to-br from-red-500/20 to-pink-500/20 backdrop-blur-sm flex items-center justify-center z-10">
                   <div className="flex items-center gap-3 text-white">
                     <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
