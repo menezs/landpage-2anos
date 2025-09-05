@@ -205,22 +205,38 @@ const EnhancedImageViewer = ({
         <ChevronRight size={28} />
       </button>
 
-      {/* Touch Areas for Mobile */}
+      {/* Touch Areas for Mobile and Desktop Navigation */}
       <div 
-        className="absolute left-0 top-0 w-1/3 h-full z-50 cursor-pointer md:hidden"
+        className="absolute left-0 top-0 w-1/3 h-full z-50 cursor-pointer flex items-center justify-center"
         onClick={() => navigateImage('prev')}
-      />
+      >
+        {/* Visual hint for navigation - shows on hover/touch */}
+        <div className="opacity-0 hover:opacity-100 md:opacity-0 md:hover:opacity-70 transition-all duration-300 bg-black/40 backdrop-blur-sm rounded-full p-4">
+          <ChevronLeft size={32} className="text-white" />
+        </div>
+      </div>
       
       <div 
-        className="absolute right-0 top-0 w-1/3 h-full z-50 cursor-pointer md:hidden"
+        className="absolute right-0 top-0 w-1/3 h-full z-50 cursor-pointer flex items-center justify-center"
         onClick={() => navigateImage('next')}
-      />
+      >
+        {/* Visual hint for navigation - shows on hover/touch */}
+        <div className="opacity-0 hover:opacity-100 md:opacity-0 md:hover:opacity-70 transition-all duration-300 bg-black/40 backdrop-blur-sm rounded-full p-4">
+          <ChevronRight size={32} className="text-white" />
+        </div>
+      </div>
 
+      {/* Center area for closing - Both Mobile and Desktop */}
       <div 
-        className="absolute center top-0 w-1/3 h-full z-40 cursor-pointer"
+        className="absolute center top-0 w-1/3 h-full z-40 cursor-pointer flex items-center justify-center"
         onClick={closeViewer}
         style={{ left: '33.33%' }}
-      />
+      >
+        {/* Visual hint for closing - shows on hover/touch */}
+        <div className="opacity-0 hover:opacity-100 md:opacity-0 md:hover:opacity-50 transition-all duration-300 bg-black/40 backdrop-blur-sm rounded-full p-4">
+          <X size={32} className="text-white" />
+        </div>
+      </div>
 
       {/* Main Image Container */}
       <div className="relative w-full h-full flex items-center justify-center p-4 md:p-12">
