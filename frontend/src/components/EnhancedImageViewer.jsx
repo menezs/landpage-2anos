@@ -82,37 +82,19 @@ const EnhancedImageViewer = ({
   };
 
   const handleZoom = (direction) => {
-    const newZoom = direction === 'in' 
-      ? Math.min(zoomLevel * 1.5, 3)
-      : Math.max(zoomLevel / 1.5, 0.5);
-    setZoomLevel(newZoom);
-    
-    if (newZoom === 1) {
-      setImagePosition({ x: 0, y: 0 });
-    }
+    // Zoom functionality removed as requested
   };
 
   const handleMouseDown = (e) => {
-    if (zoomLevel > 1) {
-      setIsDragging(true);
-      setDragStart({
-        x: e.clientX - imagePosition.x,
-        y: e.clientY - imagePosition.y
-      });
-    }
+    // Mouse down functionality removed as zoom is disabled
   };
 
   const handleMouseMove_Drag = (e) => {
-    if (isDragging && zoomLevel > 1) {
-      setImagePosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y
-      });
-    }
+    // Drag functionality removed as zoom is disabled
   };
 
   const handleMouseUp = () => {
-    setIsDragging(false);
+    // Mouse up functionality removed as zoom is disabled
   };
 
   if (!isOpen) return null;
