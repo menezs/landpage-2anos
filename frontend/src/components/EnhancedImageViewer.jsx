@@ -131,6 +131,8 @@ const EnhancedImageViewer = ({
       onMouseMove={handleMouseMove}
       onMouseMove={handleMouseMove_Drag}
       onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       
       {/* Enhanced animated background */}
