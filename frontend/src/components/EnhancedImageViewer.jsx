@@ -64,6 +64,7 @@ const EnhancedImageViewer = ({
     
     setIsTransitioning(true);
     setImageLoaded(false);
+    setSlideDirection(direction);
     
     setTimeout(() => {
       const newIndex = direction === 'next' 
@@ -71,12 +72,13 @@ const EnhancedImageViewer = ({
         : (currentIndex - 1 + images.length) % images.length;
       
       onIndexChange(newIndex);
-      setZoomLevel(1);
-      setImagePosition({ x: 0, y: 0 });
       setIsTransitioning(false);
       
-      setTimeout(() => setImageLoaded(true), 100);
-    }, 200);
+      setTimeout(() => {
+        setImageLoaded(true);
+        setSlideDirection('none');
+      }, 100);
+    }, 300);
   };
 
   const handleZoom = (direction) => {
