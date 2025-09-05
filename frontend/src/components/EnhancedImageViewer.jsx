@@ -11,11 +11,8 @@ const EnhancedImageViewer = ({
 }) => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [imagePosition, setImagePosition] = useState({ x: 0, y: 0 });
   const [showControls, setShowControls] = useState(true);
+  const [slideDirection, setSlideDirection] = useState('none'); // 'left', 'right', 'none'
 
   // Reset states when opening
   useEffect(() => {
