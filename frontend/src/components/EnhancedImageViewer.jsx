@@ -273,6 +273,7 @@ const EnhancedImageViewer = ({
             }`}
             onLoad={() => setImageLoaded(true)}
             draggable={false}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on image
           />
           
           {/* Romantic Glow Effect */}
