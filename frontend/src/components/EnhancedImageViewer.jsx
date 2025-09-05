@@ -18,8 +18,7 @@ const EnhancedImageViewer = ({
   useEffect(() => {
     if (isOpen) {
       setImageLoaded(false);
-      setZoomLevel(1);
-      setImagePosition({ x: 0, y: 0 });
+      setSlideDirection('none');
       setShowControls(true);
       
       // Hide controls after 3 seconds
