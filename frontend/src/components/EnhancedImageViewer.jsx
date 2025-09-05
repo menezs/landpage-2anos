@@ -39,8 +39,22 @@ const EnhancedImageViewer = ({
     setShowControls(true);
     clearTimeout(window.controlsTimer);
     window.controlsTimer = setTimeout(() => {
-      setShowControls(false);
+      if (!isDragging) { // Don't hide controls while dragging
+        setShowControls(false);
+      }
     }, 3000);
+  };
+
+  // Touch start/end handlers for mobile
+  const handleTouchStart = () => {
+    setShowControls(true);
+  };
+
+  const handleTouchEnd = () => {
+    clearTimeout(window.controlsTimer);
+    window.controlsTimer = setTimeout(() => {
+      setShowControls(false);
+    }, 2000);
   };
 
   const closeViewer = () => {
