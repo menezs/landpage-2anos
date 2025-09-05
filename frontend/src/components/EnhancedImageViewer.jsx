@@ -149,32 +149,6 @@ const EnhancedImageViewer = ({
               </div>
             </div>
           </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            <Button
-              onClick={() => handleZoom('out')}
-              disabled={zoomLevel <= 0.5}
-              className="bg-black/60 hover:bg-black/80 border border-white/20 text-white rounded-xl backdrop-blur-sm"
-            >
-              <ZoomOut size={20} />
-            </Button>
-            
-            <Button
-              onClick={() => handleZoom('in')}
-              disabled={zoomLevel >= 3}
-              className="bg-black/60 hover:bg-black/80 border border-white/20 text-white rounded-xl backdrop-blur-sm"
-            >
-              <ZoomIn size={20} />
-            </Button>
-            
-            <Button
-              onClick={closeViewer}
-              className="bg-red-600/80 hover:bg-red-700 text-white rounded-xl backdrop-blur-sm"
-            >
-              <X size={20} />
-            </Button>
-          </div>
         </div>
       </div>
 
