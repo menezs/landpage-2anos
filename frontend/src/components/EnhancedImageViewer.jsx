@@ -332,7 +332,7 @@ const EnhancedImageViewer = ({
         </div>
       </div>
 
-      {/* Mobile Instructions */}
+      {/* Enhanced mobile navigation instructions */}
       <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 z-60 md:hidden transition-all duration-500 ${
         showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
       }`}>
@@ -343,6 +343,20 @@ const EnhancedImageViewer = ({
             <Sparkles size={16} className="text-yellow-400" />
           </div>
           <p className="text-white text-xs opacity-80">Laterais: navegar • Centro: fechar</p>
+        </div>
+      </div>
+
+      {/* Enhanced desktop navigation instructions */}
+      <div className={`absolute bottom-8 right-8 z-60 hidden md:block transition-all duration-500 ${
+        showControls ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+      }`}>
+        <div className="bg-black/70 backdrop-blur-sm rounded-2xl px-4 py-3 border border-white/20 text-center">
+          <div className="flex items-center gap-2 mb-1 text-white text-sm">
+            <Sparkles size={14} className="text-yellow-400" />
+            <span className="font-semibold">Navegação</span>
+          </div>
+          <p className="text-white text-xs opacity-80">Clique nas laterais ou use ← →</p>
+          <p className="text-white text-xs opacity-80">Centro ou ESC para fechar</p>
         </div>
       </div>
     </div>
