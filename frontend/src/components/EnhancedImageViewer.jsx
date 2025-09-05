@@ -35,9 +35,7 @@ const EnhancedImageViewer = ({
     setShowControls(true);
     clearTimeout(window.controlsTimer);
     window.controlsTimer = setTimeout(() => {
-      if (!isDragging) { // Don't hide controls while dragging
-        setShowControls(false);
-      }
+      setShowControls(false);
     }, 3000);
   };
 
