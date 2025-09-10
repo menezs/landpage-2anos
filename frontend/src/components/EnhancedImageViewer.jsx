@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Heart, Sparkles, X } from 'lucide-react';
-import { Button } from './ui/button';
 
 const EnhancedImageViewer = ({ 
   isOpen, 
@@ -12,7 +11,7 @@ const EnhancedImageViewer = ({
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [slideDirection, setSlideDirection] = useState('none'); // 'left', 'right', 'none'
+  const [slideDirection, setSlideDirection] = useState('none');
 
   // Reset states when opening
   useEffect(() => {
@@ -77,24 +76,8 @@ const EnhancedImageViewer = ({
       setTimeout(() => {
         setImageLoaded(true);
         setSlideDirection('none');
-      }, 100);
+      }, 150);
     }, 300);
-  };
-
-  const handleZoom = (direction) => {
-    // Zoom functionality removed as requested
-  };
-
-  const handleMouseDown = (e) => {
-    // Mouse down functionality removed as zoom is disabled
-  };
-
-  const handleMouseMove_Drag = (e) => {
-    // Drag functionality removed as zoom is disabled
-  };
-
-  const handleMouseUp = () => {
-    // Mouse up functionality removed as zoom is disabled
   };
 
   if (!isOpen) return null;
@@ -107,8 +90,6 @@ const EnhancedImageViewer = ({
         isTransitioning ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
       }`}
       onMouseMove={handleMouseMove}
-      onMouseMove={handleMouseMove_Drag}
-      onMouseUp={handleMouseUp}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -134,11 +115,11 @@ const EnhancedImageViewer = ({
         <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-black/50 to-transparent"></div>
       </div>
 
-      {/* Top Controls Bar */}
+      {/* Top Controls Bar - Only Image Info */}
       <div className={`absolute top-0 left-0 right-0 z-60 p-6 transition-all duration-500 ${
         showControls ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
       }`}>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           {/* Image Info */}
           <div className="bg-black/60 backdrop-blur-sm rounded-2xl px-6 py-3 border border-white/20">
             <div className="flex items-center gap-3 text-white">
@@ -196,7 +177,7 @@ const EnhancedImageViewer = ({
 
       {/* Center area for closing - Both Mobile and Desktop */}
       <div 
-        className="absolute center top-0 w-1/3 h-full z-40 cursor-pointer flex items-center justify-center"
+        className="absolute top-0 w-1/3 h-full z-40 cursor-pointer flex items-center justify-center"
         onClick={closeViewer}
         style={{ left: '33.33%' }}
       >
@@ -206,17 +187,15 @@ const EnhancedImageViewer = ({
         </div>
       </div>
 
-      {/* Main Image Container */}
+      {/* Main Image Container with Enhanced Animations */}
       <div className="relative w-full h-full flex items-center justify-center p-4 md:p-12">
         <div 
           className={`relative max-w-[95vw] max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden transition-all duration-700 ${
             isTransitioning ? 'scale-90 blur-sm opacity-60' : 'scale-100 blur-0 opacity-100'
-          } ${!imageLoaded ? 'animate-pulse' : ''}`}
-          style={{
-            transform: `scale(${zoomLevel}) translate(${imagePosition.x}px, ${imagePosition.y}px)`,
-            cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'
-          }}
-          onMouseDown={handleMouseDown}
+          } ${!imageLoaded ? 'animate-pulse' : ''} ${
+            slideDirection === 'next' ? 'animate-slide-left' : 
+            slideDirection === 'prev' ? 'animate-slide-right' : ''
+          }`}
         >
           
           {/* Loading Overlay */}
@@ -232,16 +211,20 @@ const EnhancedImageViewer = ({
             </div>
           )}
           
-          {/* Main Image */}
+          {/* Main Image with Slide Animations */}
           <img 
             src={currentImage.src} 
             alt={currentImage.title}
-            className={`w-full h-full object-contain transition-all duration-1000 rounded-3xl ${
+            className={`w-full h-full object-contain rounded-3xl transition-all duration-700 ${
               !imageLoaded ? 'scale-110 blur-lg opacity-0' : 'scale-100 blur-0 opacity-100'
+            } ${
+              slideDirection === 'next' ? 'transform translate-x-full' :
+              slideDirection === 'prev' ? 'transform -translate-x-full' :
+              'transform translate-x-0'
             }`}
             onLoad={() => setImageLoaded(true)}
             draggable={false}
-            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking on image
+            onClick={(e) => e.stopPropagation()}
           />
           
           {/* Romantic Glow Effect */}
@@ -279,13 +262,15 @@ const EnhancedImageViewer = ({
                   if (index !== currentIndex && !isTransitioning) {
                     setIsTransitioning(true);
                     setImageLoaded(false);
+                    setSlideDirection(index > currentIndex ? 'next' : 'prev');
                     setTimeout(() => {
                       onIndexChange(index);
-                      setZoomLevel(1);
-                      setImagePosition({ x: 0, y: 0 });
                       setIsTransitioning(false);
-                      setTimeout(() => setImageLoaded(true), 100);
-                    }, 200);
+                      setTimeout(() => {
+                        setImageLoaded(true);
+                        setSlideDirection('none');
+                      }, 150);
+                    }, 300);
                   }
                 }}
                 disabled={isTransitioning}
